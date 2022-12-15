@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Home">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tareas para hacer:" />
+
+    <CheckBox
+        android:id="@+id/boxFalso1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Estudiar Ingles" />
+
+    <CheckBox
+        android:id="@+id/boxRespuesta1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lavar Coche" />
+
+    <CheckBox
+        android:id="@+id/boxFalso2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sacar a Roach " />
+
+    <CheckBox
+        android:id="@+id/boxRespuesta2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lavar Ropa" />
+
+    <Button
+        android:id="@+id/btnSiguiente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Siguiente" />
+
+
+    <Button
+        android:id="@+id/btnAtras"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:onClick="cerrarSesion"
+        android:text="Cerrar Sesion" />
+
+    <Button
+        android:id="@+id/btnServicio"
+        android:layout_width="317dp"
+        android:layout_height="wrap_content"
+        android:onClick="iniciarServicio"
+        android:text="Verificar Conexion" />
+
+
+
+</LinearLayout>

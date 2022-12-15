@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/ed1"
+        android:layout_width="235dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Ingresa usuario"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/ed2"
+        android:layout_width="234dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Ingresa contraseña"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnIngresar"
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
+        android:onClick="dataVolley"
+        android:text="Ingresar"
+        />
+
+    <Button
+        android:id="@+id/btnGoogle"
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/common_google_signin_btn_icon_dark_normal"
+        android:text="Google"
+        android:onClick="signIn"/>
+
+
+</LinearLayout>
