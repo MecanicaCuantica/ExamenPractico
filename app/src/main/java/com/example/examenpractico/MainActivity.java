@@ -37,7 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity{
-    
+
     EditText ed1, ed2;
     String[] usuarios = new String[3];
     String[] password = new String[3];
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity{
         ed1 = findViewById(R.id.ed1);
         ed2 = findViewById(R.id.ed2);
 
-        // Configuración de google sign in
+        // Configurar Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -121,14 +121,15 @@ public class MainActivity extends AppCompatActivity{
         super.onStart();
     }
 
-     public void Ingresar(){
+
+    public void Ingresar(){
         Intent ir = new Intent(this,Home.class);
         ir.addFlags(ir.FLAG_ACTIVITY_CLEAR_TASK | ir.FLAG_ACTIVITY_CLEAR_TOP);
         String vEmail = ed1.getText().toString();
         String vPassword = ed2.getText().toString();
 
         if(ed1.getText().toString().matches("") || ed2.getText().toString().matches("")){
-            Toast.makeText(this, "Revise los campos",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Debe diligenciar todos los campos",Toast.LENGTH_LONG).show();
         }else {
             for(int i=0; i<usuarios.length;i++){
                 if(usuarios[i].equals(vEmail) && password[i].equals(vPassword)) {
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity{
 
     public  void dataVolley(View l){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://run.mocky.io/v3/044ad539-431c-4305-b752-f67beb23078b";
+        String url = "https://run.mocky.io/v3/45cae298-ed2b-4ef9-bd53-4d08d7c49e40";
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
