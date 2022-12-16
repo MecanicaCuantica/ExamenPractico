@@ -37,12 +37,88 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity{
+    
+    EditText ed1, ed2;
+    String[] usuarios = new String[3];
+    String[] password = new String[3];
+    String[] nombres = new String[3];
+    int RC_SIGN_IN = 1;
+    String TAG = "GoogleSignIn";
+    //Variable para gestionar FirebaseAuth
+    private FirebaseAuth mAuth;
+    //Agregar cliente de inicio de sesión de Google
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ed1 = findViewById(R.id.ed1);
+        ed2 = findViewById(R.id.ed2);
 
+        // Configuración de google sign in
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mAuth = FirebaseAuth.getInstance();
+
+    }
+    public void signIn(View m) {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            if(task.isSuccessful()){
+                try {
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                    firebaseAuthWithGoogle(account.getIdToken());
+                } catch (ApiException e) {
+                    Log.w(TAG, "Google sign in failed", e);
+                }
+            }else{
+                Log.d(TAG, "Error, login no exitoso:" + task.getException().toString());
+                Toast.makeText(this, "Ocurrio un error. "+task.getException().toString(),
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithCredential:success");
+                            Intent homeActivity = new Intent(MainActivity.this,Home.class);
+                            startActivity(homeActivity);
+                            MainActivity.this.finish();
+                        } else {
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        }
+                    }
+                });
+    }
+    //si ya esta loguado no tiene porque volver a loguearse se envia directamente a home
+    @Override
+    protected void onStart() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user!=null){
+            Intent homeActivity = new Intent(MainActivity.this,Home.class);
+            startActivity(homeActivity);
+            MainActivity.this.finish();
+        }
+        super.onStart();
     }
 
      public void Ingresar(){
