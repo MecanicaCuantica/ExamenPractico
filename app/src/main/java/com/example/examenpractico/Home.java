@@ -25,7 +25,8 @@ public class Home extends AppCompatActivity {
 
     private CheckBox tarea1, tarea2, tarea3, tarea4;
     private Button siguiente;
-
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInOptions gso;
 
 
     @Override
@@ -38,8 +39,15 @@ public class Home extends AppCompatActivity {
         tarea3 = findViewById(R.id.boxFalso1);
         tarea4 = findViewById(R.id.boxFalso2);
         siguiente = findViewById(R.id.btnSiguiente);
-
+        
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        
         siguiente.setOnClickListener(new View.OnClickListener() {
+            
             @Override
             public void onClick(View view) {
                 if (tarea1.isChecked() && tarea2.isChecked() && tarea3.isChecked() && tarea4.isChecked()){
@@ -56,14 +64,20 @@ public class Home extends AppCompatActivity {
     }
 
     public void cerrarSesion(View l) {
+            mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 //Abrir MainActivity con SigIn button
-               
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
-                Home.this.finish();   
+                if (task.isSuccessful()) {
+                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainActivity);
+                    Home.this.finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No se pudo cerrar sesión con google",
+                            Toast.LENGTH_LONG).show();
+                }
             }
+        });
     }
     
     public void iniciarServicio(View m){
