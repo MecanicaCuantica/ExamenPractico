@@ -56,7 +56,22 @@ public class Home extends AppCompatActivity {
     }
 
     public void cerrarSesion(View l) {
-
-
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                //Abrir MainActivity con SigIn button
+               
+                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivity);
+                Home.this.finish();   
+            }
     }
+    
+    public void iniciarServicio(View m){
+        //Intent irService = new Intent(this, MyService.class);
+        //startService(irService);
+        if(UtilsNetwork.isOnline(this)){
+            Toast.makeText(getApplicationContext(),"Tiene internet ", Toast.LENGTH_SHORT).show();
+        }
+    }
+    
 }
